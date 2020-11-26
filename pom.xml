@@ -21,6 +21,8 @@
 		<connect.version>2.0.1</connect.version>
 		<javafx.maven.plugin.version>0.0.5</javafx.maven.plugin.version>
 		<client.maven.plugin.version>0.1.35</client.maven.plugin.version>
+		<sarxos.version>0.3.12</sarxos.version>
+		<lombok.version>1.18.16</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -34,6 +36,22 @@
 			<artifactId>javafx-fxml</artifactId>
 			<version>${javafx.version}</version>
 		</dependency>
+		
+		<!-- Camera -->
+		<dependency>
+			<groupId>com.github.sarxos</groupId>
+			<artifactId>webcam-capture</artifactId>
+			<version>${sarxos.version}</version>
+		</dependency>
+		
+	   	<!-- Data classes -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -60,12 +78,6 @@
 				<configuration>
 					<target>${client.target}</target>
 					<mainClass>${main.class}</mainClass>
-					<bundlesList>
-						<list>se.danielmartensson.controller.maincontroller</list>
-					</bundlesList>
-					<reflectionList>
-						<list>se.danielmartensson.controller.MainController</list>
-					</reflectionList>
 				</configuration>
 			</plugin>
 		</plugins>

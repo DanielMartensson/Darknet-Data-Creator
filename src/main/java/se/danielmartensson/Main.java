@@ -29,19 +29,31 @@ package se.danielmartensson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import se.danielmartensson.controller.MainController;
+import se.danielmartensson.tools.Dialogs;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+	
+	public static boolean RUNTHREAD = true;
 
     @Override
     public void start(Stage stage) throws IOException {
-        AnchorPane root = FXMLLoader.load(Main.class.getResource("controller/maincontroller.fxml"), ResourceBundle.getBundle("se.danielmartensson.controller.maincontroller"));
-        Scene scene = new Scene(root, 640, 480);
-        stage.setScene(scene);
+        TabPane root = FXMLLoader.load(MainController.class.getResource("maincontroller.fxml"));
+        stage.setScene(new Scene(root, 1080, 670));
+        stage.setOnCloseRequest(e -> {
+        	boolean closeProgram = new Dialogs().createConfirmDialog("Closing", "Do you want to close?");
+        	if(!closeProgram)
+        		e.consume();
+        	RUNTHREAD = false;
+        });
+        stage.setTitle("Darknet Data Creator");
+        stage.setResizable(false);
         stage.show();
     }
 
