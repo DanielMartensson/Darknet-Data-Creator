@@ -38,7 +38,7 @@ public class CameraThread extends Thread {
 	private Double resolutionHeight;
 	private Double resolutionWidht;
 	private int classNumber;
-	private File selectedSaveToFolderDirectory;
+	private File selectedSaveToFolder;
 	private AtomicInteger boundedBoxWidth;
 	private AtomicInteger boundedBoxHeight;
 	private ImageView cameraImageView;
@@ -98,13 +98,13 @@ public class CameraThread extends Thread {
 		File classImage = null;
 		File classImageLabel = null;
 		if(FileHandeling.operativeSystem.contains("Windows")) {
-			classPathFile = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "\\ClassPaths.txt");
-			classImage = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".png");
-			classImageLabel = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".txt");
+			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "\\ClassPaths.txt");
+			classImage = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".png");
+			classImageLabel = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".txt");
 		}else {
-			classPathFile = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "/ClassPaths.txt");
-			classImage = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".png");
-			classImageLabel = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".txt");
+			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "/ClassPaths.txt");
+			classImage = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".png");
+			classImageLabel = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".txt");
 		}
 		
 		// Create files that don't exist
@@ -152,11 +152,11 @@ public class CameraThread extends Thread {
 		File classFolder = null;
 		File classPathFile = null;
 		if(FileHandeling.operativeSystem.contains("Windows")) {
-			classFolder = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "\\" + classNumber);
-			classPathFile = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "\\ClassPaths.txt");
+			classFolder = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber);
+			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "\\ClassPaths.txt");
 		}else {
-			classFolder = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "/" + classNumber);
-			classPathFile = new File(selectedSaveToFolderDirectory.getAbsolutePath() + "/ClassPaths.txt");
+			classFolder = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber);
+			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "/ClassPaths.txt");
 		}
 		if(!classFolder.exists())
 			classFolder.mkdirs();
@@ -204,9 +204,9 @@ public class CameraThread extends Thread {
 		try {
 			String cameraImagePath = "";
 			if(FileHandeling.operativeSystem.contains("Windows")) {
-				cameraImagePath = selectedSaveToFolderDirectory.getAbsolutePath() + "\\camera.png";
+				cameraImagePath = selectedSaveToFolder.getAbsolutePath() + "\\camera.png";
 			}else {
-				cameraImagePath = selectedSaveToFolderDirectory.getAbsolutePath() + "/camera.png";
+				cameraImagePath = selectedSaveToFolder.getAbsolutePath() + "/camera.png";
 			}
 			File savedImage = new File(cameraImagePath);
 			ImageIO.write(cut, "png", savedImage);
@@ -351,7 +351,7 @@ public class CameraThread extends Thread {
 		resolutionHeight = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getHeight();
 		resolutionWidht = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getWidth();
 		classNumber = mainController.getClassNumberDropdownButton().getSelectionModel().getSelectedItem().intValue();
-		selectedSaveToFolderDirectory = mainController.getSelectedSaveToFolderDirectory();
+		selectedSaveToFolder = mainController.getSelectedSaveToFolder();
 		boundedBoxWidth = mainController.getBoundedBoxWidth();
 		boundedBoxHeight = mainController.getBoundedBoxHeight();
 		cameraImageView = mainController.getCameraImageView();

@@ -10,7 +10,7 @@ public class Dialogs {
 	
 	public boolean createConfirmDialog(String headerText, String content) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
+		alert.setTitle("Confirmation");
 		alert.setHeaderText(headerText);
 		alert.setContentText(content);
 

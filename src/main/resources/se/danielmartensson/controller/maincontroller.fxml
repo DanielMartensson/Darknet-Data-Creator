@@ -27,6 +27,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -74,7 +75,7 @@
                               <ChoiceBox fx:id="classNumberDropdownButton" layoutX="15.0" layoutY="370.0" prefHeight="26.0" prefWidth="235.0" />
                               <Text layoutX="15.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select class number:" />
                               <Button fx:id="saveToFolderButton" layoutX="15.0" layoutY="440.0" mnemonicParsing="false" onAction="#saveToFolderButtonPressed" prefHeight="26.0" prefWidth="235.0" text="Select save to folder" />
-                              <Text fx:id="saveToFolderLabel" layoutX="15.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="232.52197265625" />
+                              <Text fx:id="saveToFolderLabel" layoutX="15.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
                               <Button fx:id="openCameraButton" disable="true" layoutX="15.0" layoutY="490.0" mnemonicParsing="false" onAction="#openCameraButtonPressed" text="Open camera" />
                               <Button fx:id="closeCameraButton" disable="true" layoutX="144.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeCameraButtonPressed" text="Close camera" />
                               <Button fx:id="startRecordingButton" disable="true" layoutX="15.0" layoutY="600.0" mnemonicParsing="false" onAction="#startRecordingButtonPressed" text="Start recording" />
@@ -100,23 +101,24 @@
                       <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextArea fx:id="terminalTextArea" prefHeight="600.0" prefWidth="800.0" GridPane.columnIndex="1">
+                        <TextArea fx:id="terminalTextArea" prefWidth="800.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </TextArea>
                     <AnchorPane>
                            <children>
-                              <Text fx:id="selectDataFileLabel" layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Text fx:id="selectDataFileLabel" layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
                               <Button fx:id="selectDataFileButton" layoutX="15.0" layoutY="38.0" mnemonicParsing="false" onAction="#selectDataFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select data file" />
-                              <Text fx:id="selectConfigFileLabel" layoutX="15.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Text fx:id="selectConfigFileLabel" layoutX="15.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
                               <Button fx:id="selectConfigFileButton" layoutX="15.0" layoutY="107.0" mnemonicParsing="false" onAction="#selectConfigFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select config file" />
-                              <Text fx:id="selectWeightFileLabel" layoutX="15.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Text fx:id="selectWeightFileLabel" layoutX="15.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
                               <Button fx:id="selectWeightFileButton" layoutX="15.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectWeightFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select weight file" />
-                              <Text fx:id="selectDarknetFolderLabel" layoutX="15.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
-                              <Button fx:id="selectDarknetFolderButton" layoutX="15.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectDarknetFolderButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select Darknet folder" />
-                              <Button fx:id="startTrainingButton" layoutX="15.0" layoutY="306.0" mnemonicParsing="false" onAction="#startTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Start training" />
-                              <Button fx:id="stopTrainingButton" layoutX="15.0" layoutY="366.0" mnemonicParsing="false" onAction="#stopTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Stop training" />
+                              <Text fx:id="selectDarknetFileLabel" layoutX="15.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" />
+                              <Button fx:id="selectDarknetFileButton" layoutX="15.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectDarknetFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select Darknet file" />
+                              <Button fx:id="startTrainingButton" layoutX="15.0" layoutY="329.0" mnemonicParsing="false" onAction="#startTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Start training" />
+                              <Button fx:id="stopTrainingButton" disable="true" layoutX="15.0" layoutY="381.0" mnemonicParsing="false" onAction="#stopTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Stop training" />
+                              <CheckBox fx:id="meanAveragePrecisionsCheckBox" layoutX="15.0" layoutY="293.0" mnemonicParsing="false" text="Mean average precisions" />
                            </children>
                         </AnchorPane>
                      </children>

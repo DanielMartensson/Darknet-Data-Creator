@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -20,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import lombok.Getter;
 import se.danielmartensson.threads.CameraThread;
+import se.danielmartensson.threads.TrainingThread;
 import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.IntRangeStringConverter;
 import se.danielmartensson.tools.SelectedWebCam;
@@ -93,10 +95,10 @@ public class MainController {
     private Button selectWeightFileButton;
 
     @FXML
-    private Text selectDarknetFolderLabel;
+    private Text selectDarknetFileLabel;
 
     @FXML
-    private Button selectDarknetFolderButton;
+    private Button selectDarknetFileButton;
 
     @FXML
     private TextArea terminalTextArea;
@@ -106,16 +108,21 @@ public class MainController {
 
     @FXML
     private Button stopTrainingButton;
+    
+    @FXML
+    private CheckBox meanAveragePrecisionsCheckBox;
 
 	private SelectedWebCam selectedWebCam;
 
 	private FileHandeling fileHandeling;
 
-	private File selectedSaveToFolderDirectory;
-
 	private CameraThread cameraThread;
+	
+	private TrainingThread trainingThread;
 
 	private AtomicBoolean runCamera;
+	
+	private AtomicBoolean runTraining;
 
 	private AtomicBoolean runRecording;
 	
@@ -124,6 +131,16 @@ public class MainController {
 	private AtomicInteger boundedBoxHeight;
 	
 	private Webcam webcam;
+	
+	private File selectedSaveToFolder;
+
+	private File selectedWeightFile;
+
+	private File selectedDataFile;
+
+	private File selectedDarknetFile;
+
+	private File selectedConfigFile;
 
     @FXML
     void boundingBoxHeightTextFieldValueChanged(ActionEvent event) {
@@ -142,7 +159,7 @@ public class MainController {
 
     @FXML
     void openCameraButtonPressed(ActionEvent event) {
-		if (selectedSaveToFolderDirectory == null)
+		if (selectedSaveToFolder == null)
 			return;
     	cameraThread.setComponents(this);
     	runCamera.set(true);
@@ -150,7 +167,7 @@ public class MainController {
 
     @FXML
     void saveToFolderButtonPressed(ActionEvent event) {
-    	selectedSaveToFolderDirectory = fileHandeling.selectSaveToFolder(saveToFolderLabel);
+    	selectedSaveToFolder = fileHandeling.selectFolder(saveToFolderLabel);
     }
 
     @FXML
@@ -160,22 +177,22 @@ public class MainController {
 
     @FXML
     void selectConfigFileButtonPressed(ActionEvent event) {
-
+    	selectedConfigFile = fileHandeling.selectFile(selectConfigFileLabel, "Configuration file", new String[]{"*.cfg"});
     }
 
     @FXML
-    void selectDarknetFolderButtonPressed(ActionEvent event) {
-
+    void selectDarknetFileButtonPressed(ActionEvent event) {
+    	selectedDarknetFile = fileHandeling.selectFile(selectDarknetFileLabel, "Darknet file", new String[]{"*", "*.exe"});
     }
 
     @FXML
     void selectDataFileButtonPressed(ActionEvent event) {
-
+    	selectedDataFile = fileHandeling.selectFile(selectDataFileLabel, "Data file", new String[]{"*.data"});
     }
 
     @FXML
     void selectWeightFileButtonPressed(ActionEvent event) {
-
+    	selectedWeightFile = fileHandeling.selectFile(selectWeightFileLabel, "Weight file", new String[]{"*.weights"});
     }
 
     @FXML
@@ -185,7 +202,10 @@ public class MainController {
 
     @FXML
     void startTrainingButtonPressed(ActionEvent event) {
-
+    	if (selectedDarknetFile == null || selectedDataFile == null || selectedWeightFile == null || selectedConfigFile == null)
+			return;
+    	trainingThread.setComponents(this);
+    	runTraining.set(true);
     }
 
     @FXML
@@ -195,7 +215,7 @@ public class MainController {
 
     @FXML
     void stopTrainingButtonPressed(ActionEvent event) {
-    	
+    	runTraining.set(false);
     }
     
 	private void usbCameraDropdownButtonValueChanged(ActionEvent e) {
@@ -213,10 +233,16 @@ public class MainController {
     	// Declare objects first
     	selectedWebCam = new SelectedWebCam();
     	fileHandeling = new FileHandeling();
+    	
+    	// Threads
     	runCamera = new AtomicBoolean();
     	runRecording = new AtomicBoolean();
     	cameraThread = new CameraThread(runCamera, runRecording);
     	cameraThread.start();
+    	
+    	runTraining = new AtomicBoolean();
+    	trainingThread = new TrainingThread(runTraining);
+    	trainingThread.start();
     	
     	// Fill with values and select the first one
     	ObservableList<Integer> listOfSampleIntervals = FXCollections.observableArrayList();
