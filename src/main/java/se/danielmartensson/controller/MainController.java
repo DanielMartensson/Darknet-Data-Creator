@@ -18,6 +18,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import lombok.Getter;
 import se.danielmartensson.threads.CameraThread;
 import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.IntRangeStringConverter;
@@ -25,6 +26,7 @@ import se.danielmartensson.tools.SelectedWebCam;
 import se.danielmartensson.tools.observablelists.Resolutions;
 import se.danielmartensson.tools.observablelists.Webcams;
 
+@Getter
 public class MainController {
 
     @FXML
@@ -135,13 +137,15 @@ public class MainController {
 
     @FXML
     void closeCameraButtonPressed(ActionEvent event) {
-    	selectedWebCam.enableComponents(scanButton, usbCameraDropdownButton, cameraResolutionDropdownButton, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, saveToFolderButton, openCameraButton, closeCameraButton, boundingBoxHeightTextField, boundingBoxWidthTextField, startRecordingButton, stopRecordingButton, runCamera);
+    	runCamera.set(false);
     }
 
     @FXML
     void openCameraButtonPressed(ActionEvent event) {
-    	selectedWebCam.disableComponents(scanButton, usbCameraDropdownButton, cameraResolutionDropdownButton, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, saveToFolderButton, openCameraButton, closeCameraButton, boundingBoxHeightTextField, boundingBoxWidthTextField, startRecordingButton, stopRecordingButton, runCamera, selectedSaveToFolderDirectory);
-    	cameraThread.setComponents(webcam, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, selectedSaveToFolderDirectory, boundedBoxWidth, boundedBoxHeight, cameraImageView);
+		if (selectedSaveToFolderDirectory == null)
+			return;
+    	cameraThread.setComponents(this);
+    	runCamera.set(true);
     }
 
     @FXML
@@ -176,9 +180,6 @@ public class MainController {
 
     @FXML
     void startRecordingButtonPressed(ActionEvent event) {
-    	stopRecordingButton.setDisable(false);
-    	startRecordingButton.setDisable(true);
-    	closeCameraButton.setDisable(true);
     	runRecording.set(true);
     }
 
@@ -189,9 +190,6 @@ public class MainController {
 
     @FXML
     void stopRecordingButtonPressed(ActionEvent event) {
-    	stopRecordingButton.setDisable(true);
-    	startRecordingButton.setDisable(false);
-    	closeCameraButton.setDisable(false);
     	runRecording.set(false);
     }
 

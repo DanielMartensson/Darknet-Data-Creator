@@ -14,12 +14,16 @@ import javax.imageio.ImageIO;
 import com.github.sarxos.webcam.Webcam;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import se.danielmartensson.Main;
+import se.danielmartensson.controller.MainController;
 import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.observablelists.Resolutions;
+import se.danielmartensson.tools.observablelists.Webcams;
 
 public class CameraThread extends Thread {
 
@@ -39,6 +43,19 @@ public class CameraThread extends Thread {
 	private AtomicInteger boundedBoxHeight;
 	private ImageView cameraImageView;
 	private BufferedImage cutNoBound;
+	private Button startRecordingButton;
+	private Button stopRecordingButton;
+	private Button closeCameraButton;
+	private Button openCameraButton;
+	private Button scanButton;
+	private ChoiceBox<Webcams> usbCameraDropdownButton;
+	private ChoiceBox<Resolutions> cameraResolutionDropdownButton;
+	private ChoiceBox<Integer> sampleIntervallDropdownButton;
+	private ChoiceBox<Resolutions> pictureResolutionDropdownButton;
+	private ChoiceBox<Integer> classNumberDropdownButton;
+	private Button saveToFolderButton;
+	private TextField boundingBoxHeightTextField;
+	private TextField boundingBoxWidthTextField;
 
 	public CameraThread(AtomicBoolean runCamera, AtomicBoolean runRecording) {
 		this.runCamera = runCamera;
@@ -57,8 +74,11 @@ public class CameraThread extends Thread {
 					File savedImage = saveImage(cut);
 					showSavedImage(savedImage);
 					if (runRecording.get() && boundedBoxIsApplied) {
+						disableTheseComponentsWhenStartRecording();
 						File[] classes = checkClassFolderAndClassPathsFileStatus();
 						copySavedImageToClassFolder(classes);
+					}else {
+						enableTheseComponentsWhenStopRecording();
 					}
 				});
 				threadSleep();
@@ -154,6 +174,7 @@ public class CameraThread extends Thread {
 		if (hasOpen) {
 			webcam.close();
 			hasOpen = false;
+			enableTheseComponentsWhenStopCamera();
 		}
 	}
 
@@ -161,6 +182,7 @@ public class CameraThread extends Thread {
 		if (!hasOpen) {
 			webcam.open();
 			hasOpen = true;
+			disableTheseComponentsWhenStartCamera();
 		}
 	}
 
@@ -236,15 +258,15 @@ public class CameraThread extends Thread {
 			return;
 		}
 		
-		// Create the square now
+		// Create the box now
 		for(int x = 0 ; x < cw; x++) {
 			for(int y = 0; y < ch; y++) {
-				// Horizontal line
+				// Horizontal lines
 				if(x >= cw/2 - bw/2 && x < cw/2 + bw/2 && y == ch/2 - bh/2) {
 					cut.setRGB(x, y, rgb);		
 					cut.setRGB(x, y + bh - 1, rgb); // Mirror
 				}
-				// Vertical line
+				// Vertical lines
 				if(y >= ch/2 - bh/2 && y < ch/2 + bh/2 && x == cw/2 - bw/2) {
 					cut.setRGB(x, y, rgb);		
 					cut.setRGB(x + bw - 1, y, rgb); // Mirror
@@ -270,17 +292,81 @@ public class CameraThread extends Thread {
 	private BufferedImage getImage() {
 		return webcam.getImage();
 	}
+	
+	public void disableTheseComponentsWhenStartRecording() {
+    	stopRecordingButton.setDisable(false);
+    	startRecordingButton.setDisable(true);
+    	closeCameraButton.setDisable(true);
+	}
+	
+	public void disableTheseComponentsWhenStartCamera() {
+		// We want to disable this
+		scanButton.setDisable(true);
+		usbCameraDropdownButton.setDisable(true);
+		cameraResolutionDropdownButton.setDisable(true);
+		sampleIntervallDropdownButton.setDisable(true);
+		pictureResolutionDropdownButton.setDisable(true);
+		classNumberDropdownButton.setDisable(true);
+		saveToFolderButton.setDisable(true);
+		openCameraButton.setDisable(true);
+		stopRecordingButton.setDisable(true);
 
-	public void setComponents(Webcam webcam, ChoiceBox<Integer> sampleIntervallDropdownButton, ChoiceBox<Resolutions> pictureResolutionDropdownButton, ChoiceBox<Integer> classNumberDropdownButton, File selectedSaveToFolderDirectory, AtomicInteger boundedBoxWidth, AtomicInteger boundedBoxHeight, ImageView cameraImageView) {
-		this.webcam = webcam;
-		sampleTime = sampleIntervallDropdownButton.getSelectionModel().getSelectedItem().intValue();
-		resolutionHeight = pictureResolutionDropdownButton.getSelectionModel().getSelectedItem().getHeight();
-		resolutionWidht = pictureResolutionDropdownButton.getSelectionModel().getSelectedItem().getWidth();
-		classNumber = classNumberDropdownButton.getSelectionModel().getSelectedItem().intValue();
-		this.selectedSaveToFolderDirectory = selectedSaveToFolderDirectory;
-		this.boundedBoxWidth = boundedBoxWidth;
-		this.boundedBoxHeight = boundedBoxHeight;
-		this.cameraImageView = cameraImageView;
+		// We want to enable this
+		closeCameraButton.setDisable(false);
+		startRecordingButton.setDisable(false);
+		boundingBoxHeightTextField.setDisable(false);
+		boundingBoxWidthTextField.setDisable(false);
+
+	}
+	
+	public void enableTheseComponentsWhenStopRecording() {
+    	stopRecordingButton.setDisable(true);
+    	startRecordingButton.setDisable(false);
+    	closeCameraButton.setDisable(false);
 	}
 
+	public void enableTheseComponentsWhenStopCamera() {
+		// We want to enable this
+		scanButton.setDisable(false);
+		usbCameraDropdownButton.setDisable(false);
+		cameraResolutionDropdownButton.setDisable(false);
+		sampleIntervallDropdownButton.setDisable(false);
+		pictureResolutionDropdownButton.setDisable(false);
+		classNumberDropdownButton.setDisable(false);
+		saveToFolderButton.setDisable(false);
+		openCameraButton.setDisable(false);
+
+		// We want to disable this
+		closeCameraButton.setDisable(true);
+		startRecordingButton.setDisable(true);
+		stopRecordingButton.setDisable(true);
+		boundingBoxHeightTextField.setDisable(true);
+		boundingBoxWidthTextField.setDisable(true);
+
+	}
+
+	public void setComponents(MainController mainController) {
+		webcam = mainController.getWebcam();
+		sampleTime = mainController.getSampleIntervallDropdownButton().getSelectionModel().getSelectedItem().intValue();
+		resolutionHeight = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getHeight();
+		resolutionWidht = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getWidth();
+		classNumber = mainController.getClassNumberDropdownButton().getSelectionModel().getSelectedItem().intValue();
+		selectedSaveToFolderDirectory = mainController.getSelectedSaveToFolderDirectory();
+		boundedBoxWidth = mainController.getBoundedBoxWidth();
+		boundedBoxHeight = mainController.getBoundedBoxHeight();
+		cameraImageView = mainController.getCameraImageView();
+		startRecordingButton = mainController.getStartRecordingButton();
+		stopRecordingButton = mainController.getStopRecordingButton();
+		closeCameraButton = mainController.getCloseCameraButton();
+		openCameraButton = mainController.getOpenCameraButton();
+		scanButton = mainController.getScanButton();
+		usbCameraDropdownButton = mainController.getUsbCameraDropdownButton();
+		cameraResolutionDropdownButton = mainController.getCameraResolutionDropdownButton();
+		sampleIntervallDropdownButton = mainController.getSampleIntervallDropdownButton();
+		pictureResolutionDropdownButton = mainController.getPictureResolutionDropdownButton();
+		classNumberDropdownButton = mainController.getClassNumberDropdownButton();
+		saveToFolderButton = mainController.getSaveToFolderButton();
+		boundingBoxHeightTextField = mainController.getBoundingBoxHeightTextField();
+		boundingBoxWidthTextField = mainController.getBoundingBoxWidthTextField();
+	}
 }
