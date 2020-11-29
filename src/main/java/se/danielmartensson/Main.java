@@ -30,13 +30,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import se.danielmartensson.controller.MainController;
 import se.danielmartensson.tools.Dialogs;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends Application {

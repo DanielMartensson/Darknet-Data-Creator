@@ -1,8 +1,6 @@
 package se.danielmartensson.controller;
 
-import java.awt.Dimension;
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,11 +16,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import se.danielmartensson.tools.CameraThread;
 import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.IntRangeStringConverter;

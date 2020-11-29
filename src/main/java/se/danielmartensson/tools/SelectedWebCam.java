@@ -2,7 +2,6 @@ package se.danielmartensson.tools;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -10,13 +9,9 @@ import com.github.sarxos.webcam.Webcam;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import se.danielmartensson.tools.observablelists.Resolutions;
 import se.danielmartensson.tools.observablelists.Webcams;
 

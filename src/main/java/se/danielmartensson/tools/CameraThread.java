@@ -1,18 +1,11 @@
 package se.danielmartensson.tools;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,11 +17,8 @@ import javafx.application.Platform;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import lombok.AllArgsConstructor;
 import se.danielmartensson.Main;
 import se.danielmartensson.tools.observablelists.Resolutions;
-import se.danielmartensson.tools.observablelists.Webcams;
 
 public class CameraThread extends Thread {
 

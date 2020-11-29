@@ -1,7 +1,5 @@
 package se.danielmartensson.tools.observablelists;
 
-import java.awt.Dimension;
-
 import com.github.sarxos.webcam.Webcam;
 
 import lombok.AllArgsConstructor;
