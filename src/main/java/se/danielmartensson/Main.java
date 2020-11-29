@@ -38,26 +38,26 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends Application {
-	
+
 	public static AtomicBoolean RUNTHREAD = new AtomicBoolean(true);
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        TabPane root = FXMLLoader.load(MainController.class.getResource("maincontroller.fxml"));
-        stage.setScene(new Scene(root, 1080, 670));
-        stage.setOnCloseRequest(e -> {
-        	boolean closeProgram = new Dialogs().createConfirmDialog("Closing", "Do you want to close?");
-        	if(!closeProgram)
-        		e.consume();
-        	RUNTHREAD.set(false);
-        });
-        stage.setTitle("Darknet Data Creator");
-        stage.setResizable(false);
-        stage.show();
-    }
+	@Override
+	public void start(Stage stage) throws IOException {
+		TabPane root = FXMLLoader.load(MainController.class.getResource("maincontroller.fxml"));
+		stage.setScene(new Scene(root, 1080, 670));
+		stage.setOnCloseRequest(e -> {
+			boolean closeProgram = new Dialogs().createConfirmDialog("Closing", "Do you want to close?");
+			if (!closeProgram)
+				e.consume();
+			RUNTHREAD.set(false);
+		});
+		stage.setTitle("Darknet Data Creator");
+		stage.setResizable(false);
+		stage.show();
+	}
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
 }

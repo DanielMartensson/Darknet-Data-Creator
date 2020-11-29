@@ -77,7 +77,7 @@ public class CameraThread extends Thread {
 						disableTheseComponentsWhenStartRecording();
 						File[] classes = checkClassFolderAndClassPathsFileStatus();
 						copySavedImageToClassFolder(classes);
-					}else {
+					} else {
 						enableTheseComponentsWhenStopRecording();
 					}
 				});
@@ -92,21 +92,21 @@ public class CameraThread extends Thread {
 	private void copySavedImageToClassFolder(File[] classes) {
 		// Before we proceed, we need to find at what index we are at
 		int classFileName = classes.length + 1;
-		
+
 		// Write these class files now
 		File classPathFile = null;
 		File classImage = null;
 		File classImageLabel = null;
-		if(FileHandeling.operativeSystem.contains("Windows")) {
+		if (FileHandeling.operativeSystem.contains("Windows")) {
 			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "\\ClassPaths.txt");
 			classImage = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".png");
 			classImageLabel = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber + "\\" + classFileName + ".txt");
-		}else {
+		} else {
 			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "/ClassPaths.txt");
 			classImage = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".png");
 			classImageLabel = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber + "/" + classFileName + ".txt");
 		}
-		
+
 		// Create files that don't exist
 		try {
 			classImage.createNewFile();
@@ -115,7 +115,7 @@ public class CameraThread extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// Moving the saved image to the class folder and rename it
 		try {
 			ImageIO.write(cutNoBound, "png", classImage);
@@ -123,21 +123,22 @@ public class CameraThread extends Thread {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		// Get the relative size for the class label. Notice that x, y is center of the rectangle
+
+		// Get the relative size for the class label. Notice that x, y is center of the
+		// rectangle
 		float cw = cutNoBound.getWidth();
 		float ch = cutNoBound.getHeight();
 		float bw = boundedBoxWidth.floatValue();
 		float bh = boundedBoxHeight.floatValue();
-		float x = (cw/2)/cw; // Always 0.5
-		float y = (ch/2)/ch; // Same here
-		float width = bw/cw; 
-		float height = bh/ch;
+		float x = (cw / 2) / cw; // Always 0.5
+		float y = (ch / 2) / ch; // Same here
+		float width = bw / cw;
+		float height = bh / ch;
 
 		// Write the label and the path
 		try {
 			BufferedWriter labelRow = new BufferedWriter(new FileWriter(classImageLabel));
-			labelRow.write(classNumber + " " + x + " " + y  + " " + width + " " + height); // <object-class> <x> <y> <width> <height>
+			labelRow.write(classNumber + " " + x + " " + y + " " + width + " " + height); // <object-class> <x> <y> <width> <height>
 			labelRow.close();
 			BufferedWriter pathRow = new BufferedWriter(new FileWriter(classPathFile, true)); // Append
 			pathRow.write(classImage.getAbsolutePath() + "\n");
@@ -151,16 +152,16 @@ public class CameraThread extends Thread {
 		// Check if we have created folder and file
 		File classFolder = null;
 		File classPathFile = null;
-		if(FileHandeling.operativeSystem.contains("Windows")) {
+		if (FileHandeling.operativeSystem.contains("Windows")) {
 			classFolder = new File(selectedSaveToFolder.getAbsolutePath() + "\\" + classNumber);
 			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "\\ClassPaths.txt");
-		}else {
+		} else {
 			classFolder = new File(selectedSaveToFolder.getAbsolutePath() + "/" + classNumber);
 			classPathFile = new File(selectedSaveToFolder.getAbsolutePath() + "/ClassPaths.txt");
 		}
-		if(!classFolder.exists())
+		if (!classFolder.exists())
 			classFolder.mkdirs();
-		if(!classPathFile.exists()) {
+		if (!classPathFile.exists()) {
 			try {
 				classPathFile.createNewFile();
 			} catch (IOException e) {
@@ -203,9 +204,9 @@ public class CameraThread extends Thread {
 	private File saveImage(BufferedImage cut) {
 		try {
 			String cameraImagePath = "";
-			if(FileHandeling.operativeSystem.contains("Windows")) {
+			if (FileHandeling.operativeSystem.contains("Windows")) {
 				cameraImagePath = selectedSaveToFolder.getAbsolutePath() + "\\camera.png";
-			}else {
+			} else {
 				cameraImagePath = selectedSaveToFolder.getAbsolutePath() + "/camera.png";
 			}
 			File savedImage = new File(cameraImagePath);
@@ -222,27 +223,27 @@ public class CameraThread extends Thread {
 		int heightCamera = mirror.getHeight();
 		int widthResolution = resolutionWidht.intValue();
 		int heightResolution = resolutionHeight.intValue();
-		
+
 		// We need to have a cutted picture in the center
-		int x = widthCamera/2 - widthResolution/2;
-		int y = heightCamera/2 - heightResolution/2;
-		if(x <= 0 || y <= 0) {
+		int x = widthCamera / 2 - widthResolution / 2;
+		int y = heightCamera / 2 - heightResolution / 2;
+		if (x <= 0 || y <= 0) {
 			boundedBoxIsApplied = false;
 			return mirror; // No bounded box - None square
-		}else {
+		} else {
 			BufferedImage cut = mirror.getSubimage(x, y, widthResolution, heightResolution); // All sub images are square
 			cutNoBound = copyImage(cut);
 			createBoundedBox(cut);
 			return cut;
 		}
 	}
-	
-	public BufferedImage copyImage(BufferedImage source){
-	    BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
-	    Graphics g = b.getGraphics();
-	    g.drawImage(source, 0, 0, null);
-	    g.dispose();
-	    return b;
+
+	public BufferedImage copyImage(BufferedImage source) {
+		BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+		Graphics g = b.getGraphics();
+		g.drawImage(source, 0, 0, null);
+		g.dispose();
+		return b;
 	}
 
 	private void createBoundedBox(BufferedImage cut) {
@@ -251,24 +252,24 @@ public class CameraThread extends Thread {
 		int bw = boundedBoxWidth.intValue();
 		int bh = boundedBoxHeight.intValue();
 		int rgb = 0xFFFF0000; // Full red with opacity 1
-		
+
 		// Need to be sure that we are not over the limits
-		if(bw > cw || bh > ch) {
+		if (bw > cw || bh > ch) {
 			boundedBoxIsApplied = false;
 			return;
 		}
-		
+
 		// Create the box now
-		for(int x = 0 ; x < cw; x++) {
-			for(int y = 0; y < ch; y++) {
+		for (int x = 0; x < cw; x++) {
+			for (int y = 0; y < ch; y++) {
 				// Horizontal lines
-				if(x >= cw/2 - bw/2 && x < cw/2 + bw/2 && y == ch/2 - bh/2) {
-					cut.setRGB(x, y, rgb);		
+				if (x >= cw / 2 - bw / 2 && x < cw / 2 + bw / 2 && y == ch / 2 - bh / 2) {
+					cut.setRGB(x, y, rgb);
 					cut.setRGB(x, y + bh - 1, rgb); // Mirror
 				}
 				// Vertical lines
-				if(y >= ch/2 - bh/2 && y < ch/2 + bh/2 && x == cw/2 - bw/2) {
-					cut.setRGB(x, y, rgb);		
+				if (y >= ch / 2 - bh / 2 && y < ch / 2 + bh / 2 && x == cw / 2 - bw / 2) {
+					cut.setRGB(x, y, rgb);
 					cut.setRGB(x + bw - 1, y, rgb); // Mirror
 				}
 			}
@@ -292,13 +293,13 @@ public class CameraThread extends Thread {
 	private BufferedImage getImage() {
 		return webcam.getImage();
 	}
-	
+
 	public void disableTheseComponentsWhenStartRecording() {
-    	stopRecordingButton.setDisable(false);
-    	startRecordingButton.setDisable(true);
-    	closeCameraButton.setDisable(true);
+		stopRecordingButton.setDisable(false);
+		startRecordingButton.setDisable(true);
+		closeCameraButton.setDisable(true);
 	}
-	
+
 	public void disableTheseComponentsWhenStartCamera() {
 		// We want to disable this
 		scanButton.setDisable(true);
@@ -318,11 +319,11 @@ public class CameraThread extends Thread {
 		boundingBoxWidthTextField.setDisable(false);
 
 	}
-	
+
 	public void enableTheseComponentsWhenStopRecording() {
-    	stopRecordingButton.setDisable(true);
-    	startRecordingButton.setDisable(false);
-    	closeCameraButton.setDisable(false);
+		stopRecordingButton.setDisable(true);
+		startRecordingButton.setDisable(false);
+		closeCameraButton.setDisable(false);
 	}
 
 	public void enableTheseComponentsWhenStopCamera() {

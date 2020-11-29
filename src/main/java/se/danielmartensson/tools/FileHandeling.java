@@ -9,14 +9,14 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class FileHandeling {
-	
+
 	public static String operativeSystem;
 
 	public FileHandeling() {
 		String osName = System.getProperty("os.name");
-		if(osName.contains("Windows")) {
+		if (osName.contains("Windows")) {
 			operativeSystem = "Windows";
-		}else {
+		} else {
 			operativeSystem = "Linux";
 		}
 	}
@@ -24,12 +24,12 @@ public class FileHandeling {
 	public File selectFolder(Text selectFolderLabel) {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setTitle("Where do you want to save your data?");
-		if(operativeSystem.equals("Windows"))
+		if (operativeSystem.equals("Windows"))
 			directoryChooser.setInitialDirectory(new File("C:\\"));
 		else
 			directoryChooser.setInitialDirectory(new File("/"));
 		File selectedFolder = directoryChooser.showDialog(new Stage());
-		if(selectedFolder != null)
+		if (selectedFolder != null)
 			selectFolderLabel.setText("Path: " + selectedFolder.getAbsolutePath());
 		else
 			selectFolderLabel.setText("Path: No path selected");
@@ -40,12 +40,12 @@ public class FileHandeling {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("What file do you want to select?");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter(fileName, extensions));
-		if(operativeSystem.equals("Windows"))
+		if (operativeSystem.equals("Windows"))
 			fileChooser.setInitialDirectory(new File("C:\\"));
 		else
 			fileChooser.setInitialDirectory(new File("/"));
 		File selectedFile = fileChooser.showOpenDialog(new Stage());
-		if(selectedFile != null)
+		if (selectedFile != null)
 			selectFileLabel.setText("Path: " + selectedFile.getAbsolutePath());
 		else
 			selectFileLabel.setText("Path: No path selected");

@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class Webcams {
-	
+
 	private String webcamName;
 	private Webcam webcam;
-	
+
 	@Override
 	public String toString() {
 		return webcamName;

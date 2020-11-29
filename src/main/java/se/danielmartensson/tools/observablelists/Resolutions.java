@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class Resolutions {
-	
+
 	private Double width;
 	private Double height;
 	private Dimension dimension;
-	
+
 	@Override
 	public String toString() {
 		return width + "x" + height;
