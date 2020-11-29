@@ -18,7 +18,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-import se.danielmartensson.tools.CameraThread;
+import se.danielmartensson.threads.CameraThread;
 import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.IntRangeStringConverter;
 import se.danielmartensson.tools.SelectedWebCam;

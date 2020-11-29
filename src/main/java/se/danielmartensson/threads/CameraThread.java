@@ -1,4 +1,4 @@
-package se.danielmartensson.tools;
+package se.danielmartensson.threads;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -18,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import se.danielmartensson.Main;
+import se.danielmartensson.tools.FileHandeling;
 import se.danielmartensson.tools.observablelists.Resolutions;
 
 public class CameraThread extends Thread {
