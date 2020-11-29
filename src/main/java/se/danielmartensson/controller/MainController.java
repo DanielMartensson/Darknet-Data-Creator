@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.sarxos.webcam.Webcam;
 
@@ -121,20 +122,20 @@ public class MainController {
 
 	private AtomicBoolean runRecording;
 	
-	private Integer boundedBoxWidth;
+	private AtomicInteger boundedBoxWidth;
 	
-	private Integer boundedBoxHeight;
+	private AtomicInteger boundedBoxHeight;
 	
 	private Webcam webcam;
 
     @FXML
     void boundingBoxHeightTextFieldValueChanged(ActionEvent event) {
-    	boundedBoxHeight = Integer.parseInt(boundingBoxHeightTextField.getText());
+    	boundedBoxHeight.set(Integer.parseInt(boundingBoxHeightTextField.getText()));
     }
 
     @FXML
     void boundingBoxWidthTextFieldValueChanged(ActionEvent event) {
-    	boundedBoxWidth = Integer.parseInt(boundingBoxWidthTextField.getText());
+    	boundedBoxWidth.set(Integer.parseInt(boundingBoxWidthTextField.getText()));
     }
 
     @FXML
@@ -145,8 +146,7 @@ public class MainController {
     @FXML
     void openCameraButtonPressed(ActionEvent event) {
     	selectedWebCam.disableComponents(scanButton, usbCameraDropdownButton, cameraResolutionDropdownButton, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, saveToFolderButton, openCameraButton, closeCameraButton, boundingBoxHeightTextField, boundingBoxWidthTextField, startRecordingButton, stopRecordingButton, runCamera, selectedSaveToFolderDirectory);
-    	System.out.println(webcam == null);
-    	//cameraThread.setComponents(webcam, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, selectedSaveToFolderDirectory, boundedBoxWidth, boundedBoxHeight, cameraImageView);
+    	cameraThread.setComponents(webcam, sampleIntervallDropdownButton, pictureResolutionDropdownButton, classNumberDropdownButton, selectedSaveToFolderDirectory, boundedBoxWidth, boundedBoxHeight, cameraImageView);
     }
 
     @FXML
@@ -181,7 +181,10 @@ public class MainController {
 
     @FXML
     void startRecordingButtonPressed(ActionEvent event) {
-
+    	stopRecordingButton.setDisable(false);
+    	startRecordingButton.setDisable(true);
+    	closeCameraButton.setDisable(true);
+    	runRecording.set(true);
     }
 
     @FXML
@@ -191,15 +194,20 @@ public class MainController {
 
     @FXML
     void stopRecordingButtonPressed(ActionEvent event) {
-
+    	stopRecordingButton.setDisable(true);
+    	startRecordingButton.setDisable(false);
+    	closeCameraButton.setDisable(false);
+    	runRecording.set(false);
     }
 
     @FXML
     void stopTrainingButtonPressed(ActionEvent event) {
-
+    	
     }
     
 	private void usbCameraDropdownButtonValueChanged(ActionEvent e) {
+		if(usbCameraDropdownButton.getSelectionModel().getSelectedItem() == null)
+			return;
 		webcam = usbCameraDropdownButton.getSelectionModel().getSelectedItem().getWebcam();
 		selectedWebCam.findResolutions(webcam, cameraResolutionDropdownButton, openCameraButton, closeCameraButton);
 	}
@@ -243,11 +251,13 @@ public class MainController {
     	cameraResolutionDropdownButton.setOnAction(e -> cameraResolutionDropdownButtonValueCanged(e));
     	
     	// Textformaters
-    	StringConverter<Integer> maxBoundedWidth = new IntRangeStringConverter(0, 800);
-    	StringConverter<Integer> maxBoundedHeight = new IntRangeStringConverter(0, 600);
+    	StringConverter<Integer> maxBoundedWidth = new IntRangeStringConverter(1, 800);
+    	StringConverter<Integer> maxBoundedHeight = new IntRangeStringConverter(1, 600);
     	boundingBoxWidthTextField.setTextFormatter(new TextFormatter<>(maxBoundedWidth, 0));
     	boundingBoxHeightTextField.setTextFormatter(new TextFormatter<>(maxBoundedHeight, 0));
-    	
+    	boundingBoxWidthTextField.setText("1");
+    	boundingBoxHeightTextField.setText("1");
+    	boundedBoxWidth = new AtomicInteger(1);
+    	boundedBoxHeight = new AtomicInteger(1);
     }
-
 }

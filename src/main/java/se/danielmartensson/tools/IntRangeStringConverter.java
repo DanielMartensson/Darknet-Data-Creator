@@ -14,7 +14,7 @@ public class IntRangeStringConverter extends StringConverter<Integer> {
     
     @Override
     public String toString(Integer object) {
-        return String.format("%02d", object);
+        return String.format("%01d", object);
     }
 
     @Override

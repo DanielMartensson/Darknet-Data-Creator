@@ -37,10 +37,11 @@ import se.danielmartensson.tools.Dialogs;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends Application {
 	
-	public static boolean RUNTHREAD = true;
+	public static AtomicBoolean RUNTHREAD = new AtomicBoolean(true);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -50,7 +51,7 @@ public class Main extends Application {
         	boolean closeProgram = new Dialogs().createConfirmDialog("Closing", "Do you want to close?");
         	if(!closeProgram)
         		e.consume();
-        	RUNTHREAD = false;
+        	RUNTHREAD.set(false);
         });
         stage.setTitle("Darknet Data Creator");
         stage.setResizable(false);

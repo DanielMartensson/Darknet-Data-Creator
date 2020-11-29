@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class FileHandeling {
 	
-	private String operativeSystem;
+	public static String operativeSystem;
 
 	public FileHandeling() {
 		String osName = System.getProperty("os.name");
@@ -23,7 +23,7 @@ public class FileHandeling {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		directoryChooser.setTitle("Where do you want to save your data?");
 		if(operativeSystem.equals("Windows"))
-			directoryChooser.setInitialDirectory(new File("C:/"));
+			directoryChooser.setInitialDirectory(new File("C:\\"));
 		else
 			directoryChooser.setInitialDirectory(new File("/"));
 		File selectedSaveToFolderDirectory = directoryChooser.showDialog(new Stage());

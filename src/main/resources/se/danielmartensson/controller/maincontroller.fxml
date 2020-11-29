@@ -25,6 +25,7 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Tab?>
@@ -33,57 +34,96 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1080.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.danielmartensson.controller.MainController">
   <tabs>
-    <Tab text="Collect">
-      <content>
-        <AnchorPane prefHeight="715.0" prefWidth="1064.0">
+      <Tab text="Collect">
+        <content>
+          <AnchorPane>
                <children>
-                  <Button fx:id="scanButton" layoutX="15.0" layoutY="80.0" mnemonicParsing="false" onAction="#scanButtonPressed" prefHeight="26.0" prefWidth="235.0" text="Scan" />
-                  <ChoiceBox fx:id="usbCameraDropdownButton" disable="true" layoutX="15.0" layoutY="40.0" prefHeight="26.0" prefWidth="235.0" />
-                  <Text layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select USB camera:" />
-                  <ChoiceBox fx:id="cameraResolutionDropdownButton" disable="true" layoutX="15.0" layoutY="150.0" prefHeight="26.0" prefWidth="235.0" />
-                  <Text layoutX="15.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select camera resolution:" />
-                  <ChoiceBox fx:id="sampleIntervallDropdownButton" layoutX="15.0" layoutY="220.0" prefHeight="26.0" prefWidth="235.0" />
-                  <Text layoutX="15.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select sample interval (s):" />
-                  <ChoiceBox fx:id="pictureResolutionDropdownButton" layoutX="15.0" layoutY="300.0" prefHeight="26.0" prefWidth="235.0" />
-                  <Text layoutX="15.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select picture resolution:" />
-                  <TextField fx:id="boundingBoxWidthTextField" layoutX="67.0" layoutY="561.0" onAction="#boundingBoxWidthTextFieldValueChanged" prefHeight="26.0" prefWidth="60.0" />
-                  <Text layoutX="15.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select bounding box dimensions:" />
-                  <Text layoutX="15.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width:" />
-                  <TextField fx:id="boundingBoxHeightTextField" layoutX="190.0" layoutY="561.0" onAction="#boundingBoxHeightTextFieldValueChanged" prefHeight="26.0" prefWidth="60.0" />
-                  <Text layoutX="135.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height:" />
-                  <ChoiceBox fx:id="classNumberDropdownButton" layoutX="15.0" layoutY="370.0" prefHeight="26.0" prefWidth="235.0" />
-                  <Text layoutX="15.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select class number:" />
-                  <Button fx:id="saveToFolderButton" layoutX="15.0" layoutY="440.0" mnemonicParsing="false" onAction="#saveToFolderButtonPressed" prefHeight="26.0" prefWidth="235.0" text="Select save to folder" />
-                  <Text fx:id="saveToFolderLabel" layoutX="15.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="232.52197265625" />
-                  <Button fx:id="openCameraButton" disable="true" layoutX="15.0" layoutY="490.0" mnemonicParsing="false" onAction="#openCameraButtonPressed" text="Open camera" />
-                  <Button fx:id="closeCameraButton" disable="true" layoutX="144.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeCameraButtonPressed" text="Close camera" />
-                  <Button fx:id="startRecordingButton" disable="true" layoutX="15.0" layoutY="600.0" mnemonicParsing="false" onAction="#startRecordingButtonPressed" text="Start recording" />
-                  <Button fx:id="stopRecordingButton" disable="true" layoutX="139.0" layoutY="600.0" mnemonicParsing="false" onAction="#stopRecordingButtonPressed" text="Stop recording" />
-                  <ImageView fx:id="cameraImageView" fitHeight="600.0" fitWidth="800.0" layoutX="265.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Train">
-      <content>
-        <AnchorPane>
+                  <GridPane gridLinesVisible="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="cameraImageView" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS" />
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="scanButton" layoutX="15.0" layoutY="80.0" mnemonicParsing="false" onAction="#scanButtonPressed" prefHeight="26.0" prefWidth="235.0" text="Scan" />
+                              <ChoiceBox fx:id="usbCameraDropdownButton" disable="true" layoutX="15.0" layoutY="40.0" prefHeight="26.0" prefWidth="235.0" />
+                              <Text layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select USB camera:" />
+                              <ChoiceBox fx:id="cameraResolutionDropdownButton" disable="true" layoutX="15.0" layoutY="150.0" prefHeight="26.0" prefWidth="235.0" />
+                              <Text layoutX="15.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select camera resolution:" />
+                              <ChoiceBox fx:id="sampleIntervallDropdownButton" layoutX="15.0" layoutY="220.0" prefHeight="26.0" prefWidth="235.0" />
+                              <Text layoutX="15.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select sample interval (s):" />
+                              <ChoiceBox fx:id="pictureResolutionDropdownButton" layoutX="15.0" layoutY="300.0" prefHeight="26.0" prefWidth="235.0" />
+                              <Text layoutX="15.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select picture resolution:" />
+                              <TextField fx:id="boundingBoxWidthTextField" layoutX="67.0" layoutY="561.0" onAction="#boundingBoxWidthTextFieldValueChanged" prefHeight="26.0" prefWidth="60.0" />
+                              <Text layoutX="15.0" layoutY="547.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select bounding box dimensions:" />
+                              <Text layoutX="15.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width:" />
+                              <TextField fx:id="boundingBoxHeightTextField" layoutX="190.0" layoutY="561.0" onAction="#boundingBoxHeightTextFieldValueChanged" prefHeight="26.0" prefWidth="60.0" />
+                              <Text layoutX="135.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height:" />
+                              <ChoiceBox fx:id="classNumberDropdownButton" layoutX="15.0" layoutY="370.0" prefHeight="26.0" prefWidth="235.0" />
+                              <Text layoutX="15.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select class number:" />
+                              <Button fx:id="saveToFolderButton" layoutX="15.0" layoutY="440.0" mnemonicParsing="false" onAction="#saveToFolderButtonPressed" prefHeight="26.0" prefWidth="235.0" text="Select save to folder" />
+                              <Text fx:id="saveToFolderLabel" layoutX="15.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="232.52197265625" />
+                              <Button fx:id="openCameraButton" disable="true" layoutX="15.0" layoutY="490.0" mnemonicParsing="false" onAction="#openCameraButtonPressed" text="Open camera" />
+                              <Button fx:id="closeCameraButton" disable="true" layoutX="144.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeCameraButtonPressed" text="Close camera" />
+                              <Button fx:id="startRecordingButton" disable="true" layoutX="15.0" layoutY="600.0" mnemonicParsing="false" onAction="#startRecordingButtonPressed" text="Start recording" />
+                              <Button fx:id="stopRecordingButton" disable="true" layoutX="139.0" layoutY="600.0" mnemonicParsing="false" onAction="#stopRecordingButtonPressed" text="Stop recording" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Train">
+        <content>
+          <AnchorPane>
                <children>
-                  <Text fx:id="selectDataFileLabel" layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
-                  <Button fx:id="selectDataFileButton" layoutX="15.0" layoutY="38.0" mnemonicParsing="false" onAction="#selectDataFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select data file" />
-                  <Text fx:id="selectConfigFileLabel" layoutX="15.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
-                  <Button fx:id="selectConfigFileButton" layoutX="15.0" layoutY="107.0" mnemonicParsing="false" onAction="#selectConfigFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select config file" />
-                  <Text fx:id="selectWeightFileLabel" layoutX="15.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
-                  <Button fx:id="selectWeightFileButton" layoutX="15.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectWeightFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select weight file" />
-                  <Text fx:id="selectDarknetFolderLabel" layoutX="15.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
-                  <Button fx:id="selectDarknetFolderButton" layoutX="15.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectDarknetFolderButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select Darknet folder" />
-                  <TextArea fx:id="terminalTextArea" layoutX="262.0" layoutY="25.0" prefHeight="600.0" prefWidth="800.0" />
-                  <Button fx:id="startTrainingButton" layoutX="15.0" layoutY="306.0" mnemonicParsing="false" onAction="#startTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Start training" />
-                  <Button fx:id="stopTrainingButton" layoutX="15.0" layoutY="366.0" mnemonicParsing="false" onAction="#stopTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Stop training" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
+                  <GridPane gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextArea fx:id="terminalTextArea" prefHeight="600.0" prefWidth="800.0" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                    <AnchorPane>
+                           <children>
+                              <Text fx:id="selectDataFileLabel" layoutX="15.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Button fx:id="selectDataFileButton" layoutX="15.0" layoutY="38.0" mnemonicParsing="false" onAction="#selectDataFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select data file" />
+                              <Text fx:id="selectConfigFileLabel" layoutX="15.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Button fx:id="selectConfigFileButton" layoutX="15.0" layoutY="107.0" mnemonicParsing="false" onAction="#selectConfigFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select config file" />
+                              <Text fx:id="selectWeightFileLabel" layoutX="15.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Button fx:id="selectWeightFileButton" layoutX="15.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectWeightFileButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select weight file" />
+                              <Text fx:id="selectDarknetFolderLabel" layoutX="15.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="235.52197265625" />
+                              <Button fx:id="selectDarknetFolderButton" layoutX="15.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectDarknetFolderButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Select Darknet folder" />
+                              <Button fx:id="startTrainingButton" layoutX="15.0" layoutY="306.0" mnemonicParsing="false" onAction="#startTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Start training" />
+                              <Button fx:id="stopTrainingButton" layoutX="15.0" layoutY="366.0" mnemonicParsing="false" onAction="#stopTrainingButtonPressed" prefHeight="26.0" prefWidth="240.0" text="Stop training" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
   </tabs>
 </TabPane>
