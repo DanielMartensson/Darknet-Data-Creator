@@ -200,6 +200,8 @@ public class CameraThread extends Thread {
 		int heightCamera = mirror.getHeight();
 		int widthResolution = resolutionWidht.intValue();
 		int heightResolution = resolutionHeight.intValue();
+		
+		// We need to have a cutted picture in the center
 		int x = widthCamera/2 - widthResolution/2;
 		int y = heightCamera/2 - heightResolution/2;
 		if(x <= 0 || y <= 0) {
