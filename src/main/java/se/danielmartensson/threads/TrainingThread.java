@@ -140,7 +140,6 @@ public class TrainingThread extends Thread {
 	private void writeToTerminal(String newLine) {
 		String currentText = terminalTextArea.getText();
 		String[] currentLines = currentText.split("\n");
-		System.out.println(currentLines.length);
 		if (currentLines.length > 200) {
 			// Remove the first line and add the last line
 			String newText = "";
