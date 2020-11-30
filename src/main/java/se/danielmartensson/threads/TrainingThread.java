@@ -33,6 +33,9 @@ public class TrainingThread extends Thread {
 	private Button stopTrainingButton;
 	private CheckBox meanAveragePrecisionsCheckBox;
 
+	// Needs to be a field
+	private String newText;
+
 	public TrainingThread(AtomicBoolean runTraining) {
 		this.runTraining = runTraining;
 	}
@@ -44,8 +47,8 @@ public class TrainingThread extends Thread {
 				Platform.runLater(() -> {
 					clearTerminal();
 					disableComponents();
-					callDarknetFromJava();
 				});
+				callDarknetFromJava();
 			}
 			threadSleep();
 		}
@@ -142,16 +145,13 @@ public class TrainingThread extends Thread {
 		String[] currentLines = currentText.split("\n");
 		if (currentLines.length > 200) {
 			// Remove the first line and add the last line
-			String newText = "";
 			for (int i = 1; i < currentLines.length; i++)
 				newText += currentLines[i] + "\n";
 			newText += newLine;
-			terminalTextArea.setText(newText);
 		} else {
-			// Just add
-			String newText = currentText + "\n" + newLine;
-			terminalTextArea.setText(newText);
+			newText = currentText + "\n" + newLine; // Just add
 		}
+		Platform.runLater(() -> terminalTextArea.setText(newText));
 
 	}
 
