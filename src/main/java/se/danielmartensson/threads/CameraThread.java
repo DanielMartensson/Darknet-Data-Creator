@@ -34,7 +34,7 @@ public class CameraThread extends Thread {
 
 	// From the GUI
 	private Webcam webcam;
-	private int sampleTime;
+	private String sampleTime = "1.0"; // Initial sample time
 	private Double resolutionHeight;
 	private Double resolutionWidht;
 	private int classNumber;
@@ -50,7 +50,7 @@ public class CameraThread extends Thread {
 	private Button scanButton;
 	private ChoiceBox<Webcams> usbCameraDropdownButton;
 	private ChoiceBox<Resolutions> cameraResolutionDropdownButton;
-	private ChoiceBox<Integer> sampleIntervallDropdownButton;
+	private ChoiceBox<String> sampleIntervallDropdownButton;
 	private ChoiceBox<Resolutions> pictureResolutionDropdownButton;
 	private ChoiceBox<Integer> classNumberDropdownButton;
 	private Button saveToFolderButton;
@@ -68,18 +68,23 @@ public class CameraThread extends Thread {
 			while (runCamera.get()) {
 				Platform.runLater(() -> {
 					openCamera();
-					BufferedImage image = getImage();
-					BufferedImage mirror = mirrorImage(image);
-					BufferedImage cut = cutImageWithBoundedBox(mirror);
-					File savedImage = saveImage(cut);
-					showSavedImage(savedImage);
-					if (runRecording.get() && boundedBoxIsApplied) {
-						disableTheseComponentsWhenStartRecording();
-						File[] classes = checkClassFolderAndClassPathsFileStatus();
-						copySavedImageToClassFolder(classes);
-					} else {
-						enableTheseComponentsWhenStopRecording();
+					if(hasOpen) {
+						BufferedImage image = getImage();
+						//BufferedImage mirror = mirrorImage(image);
+						BufferedImage cut = cutImageWithBoundedBox(image);
+						File savedImage = saveImage(cut);
+						showSavedImage(savedImage);
+						if (runRecording.get() && boundedBoxIsApplied) {
+							disableTheseComponentsWhenStartRecording();
+							File[] classes = checkClassFolderAndClassPathsFileStatus();
+							copySavedImageToClassFolder(classes);
+						} else {
+							enableTheseComponentsWhenStopRecording();
+						}
+					}else {
+						closeCamera();
 					}
+	
 				});
 				threadSleep();
 			}
@@ -181,15 +186,20 @@ public class CameraThread extends Thread {
 
 	private void openCamera() {
 		if (!hasOpen) {
-			webcam.open();
-			hasOpen = true;
+			try {
+				webcam.open();
+				hasOpen = true;
+			}catch(Exception e) {
+				hasOpen = false;
+			}
 			disableTheseComponentsWhenStartCamera();
 		}
 	}
 
 	private void threadSleep() {
 		try {
-			Thread.sleep(sampleTime * 1000);
+			long time = (long) (Double.parseDouble(sampleTime) * 1000.0);
+			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,9 +228,9 @@ public class CameraThread extends Thread {
 		}
 	}
 
-	private BufferedImage cutImageWithBoundedBox(BufferedImage mirror) {
-		int widthCamera = mirror.getWidth();
-		int heightCamera = mirror.getHeight();
+	private BufferedImage cutImageWithBoundedBox(BufferedImage image) {
+		int widthCamera = image.getWidth();
+		int heightCamera = image.getHeight();
 		int widthResolution = resolutionWidht.intValue();
 		int heightResolution = resolutionHeight.intValue();
 
@@ -229,9 +239,9 @@ public class CameraThread extends Thread {
 		int y = heightCamera / 2 - heightResolution / 2;
 		if (x <= 0 || y <= 0) {
 			boundedBoxIsApplied = false;
-			return mirror; // No bounded box - None square
+			return image; // No bounded box - None square
 		} else {
-			BufferedImage cut = mirror.getSubimage(x, y, widthResolution, heightResolution); // All sub images are square
+			BufferedImage cut = image.getSubimage(x, y, widthResolution, heightResolution); // All sub images are square
 			cutNoBound = copyImage(cut);
 			createBoundedBox(cut);
 			return cut;
@@ -239,7 +249,7 @@ public class CameraThread extends Thread {
 	}
 
 	public BufferedImage copyImage(BufferedImage source) {
-		BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+		BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = b.getGraphics();
 		g.drawImage(source, 0, 0, null);
 		g.dispose();
@@ -277,6 +287,7 @@ public class CameraThread extends Thread {
 		boundedBoxIsApplied = true;
 	}
 
+	@SuppressWarnings("unused")
 	private BufferedImage mirrorImage(BufferedImage image) {
 		int width = image.getWidth();
 		int height = image.getHeight();
@@ -291,7 +302,7 @@ public class CameraThread extends Thread {
 	}
 
 	private BufferedImage getImage() {
-		return webcam.getImage();
+		return copyImage(webcam.getImage()); // We need to specify the Image Type. webcam.getImage() gives type 0
 	}
 
 	public void disableTheseComponentsWhenStartRecording() {
@@ -347,8 +358,8 @@ public class CameraThread extends Thread {
 	}
 
 	public void setComponents(MainController mainController) {
-		webcam = mainController.getWebcam();
-		sampleTime = mainController.getSampleIntervallDropdownButton().getSelectionModel().getSelectedItem().intValue();
+		webcam = mainController.getUsbCameraDropdownButton().getSelectionModel().getSelectedItem().getWebcam();
+		sampleTime = mainController.getSampleIntervallDropdownButton().getSelectionModel().getSelectedItem();
 		resolutionHeight = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getHeight();
 		resolutionWidht = mainController.getPictureResolutionDropdownButton().getSelectionModel().getSelectedItem().getWidth();
 		classNumber = mainController.getClassNumberDropdownButton().getSelectionModel().getSelectedItem().intValue();

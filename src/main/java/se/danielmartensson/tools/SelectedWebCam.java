@@ -38,11 +38,11 @@ public class SelectedWebCam {
 		return camerasFound;
 	}
 
-	public boolean findResolutions(Webcam webcam, ChoiceBox<Resolutions> cameraResolutionDropdownButton, Button openCameraButton, Button closeCameraButton) {
+	public boolean findResolutions(ChoiceBox<Webcams> usbCameraDropdownButton, ChoiceBox<Resolutions> cameraResolutionDropdownButton, Button openCameraButton, Button closeCameraButton) {
 		// List our dimensions of selected camera
-		if (webcam == null)
+		if (usbCameraDropdownButton == null)
 			return false;
-		Dimension[] dimensions = webcam.getViewSizes();
+		Dimension[] dimensions = usbCameraDropdownButton.getSelectionModel().getSelectedItem().getWebcam().getViewSizes();
 
 		// Check if we found any dimensions
 		boolean dimensionsFound;
@@ -66,9 +66,9 @@ public class SelectedWebCam {
 
 	}
 
-	public void setResolution(Webcam webcam, Resolutions resolutions) {
+	public void setResolution(ChoiceBox<Webcams> usbCameraDropdownButton, Resolutions resolutions) {
 		int width = resolutions.getWidth().intValue();
 		int height = resolutions.getHeight().intValue();
-		webcam.setViewSize(new Dimension(width, height));
+		usbCameraDropdownButton.getSelectionModel().getSelectedItem().getWebcam().setViewSize(new Dimension(width, height));
 	}
 }

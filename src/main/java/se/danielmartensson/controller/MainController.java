@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.github.sarxos.webcam.Webcam;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +39,7 @@ public class MainController {
 	private ChoiceBox<Resolutions> cameraResolutionDropdownButton;
 
 	@FXML
-	private ChoiceBox<Integer> sampleIntervallDropdownButton;
+	private ChoiceBox<String> sampleIntervallDropdownButton;
 
 	@FXML
 	private ChoiceBox<Resolutions> pictureResolutionDropdownButton;
@@ -130,8 +128,6 @@ public class MainController {
 
 	private AtomicInteger boundedBoxHeight;
 
-	private Webcam webcam;
-
 	private File selectedSaveToFolder;
 
 	private File selectedWeightFile;
@@ -219,14 +215,20 @@ public class MainController {
 	}
 
 	private void usbCameraDropdownButtonValueChanged(ActionEvent e) {
-		if (usbCameraDropdownButton.getSelectionModel().getSelectedItem() == null)
+		if (usbCameraDropdownButton.getSelectionModel().getSelectedItem() == null) {
+			usbCameraDropdownButton.getSelectionModel().clearSelection();
 			return;
-		webcam = usbCameraDropdownButton.getSelectionModel().getSelectedItem().getWebcam();
-		selectedWebCam.findResolutions(webcam, cameraResolutionDropdownButton, openCameraButton, closeCameraButton);
+		}
+
+		selectedWebCam.findResolutions(usbCameraDropdownButton, cameraResolutionDropdownButton, openCameraButton, closeCameraButton);
 	}
 
 	private void cameraResolutionDropdownButtonValueCanged(ActionEvent e) {
-		selectedWebCam.setResolution(webcam, cameraResolutionDropdownButton.getSelectionModel().getSelectedItem());
+		if(cameraResolutionDropdownButton.getSelectionModel().getSelectedItem() == null) {
+			cameraResolutionDropdownButton.getSelectionModel().clearSelection();
+			return;
+		}
+		selectedWebCam.setResolution(usbCameraDropdownButton, cameraResolutionDropdownButton.getSelectionModel().getSelectedItem());
 	}
 
 	@FXML
@@ -246,11 +248,11 @@ public class MainController {
 		trainingThread.start();
 
 		// Fill with values and select the first one
-		ObservableList<Integer> listOfSampleIntervals = FXCollections.observableArrayList();
+		ObservableList<String> listOfSampleIntervals = FXCollections.observableArrayList();
 		ObservableList<Resolutions> listOfResolutions = FXCollections.observableArrayList();
 		ObservableList<Integer> listOfClassNumbers = FXCollections.observableArrayList();
-		for (int i = 1; i <= 10; i++)
-			listOfSampleIntervals.add(i);
+		for (double i = 0.1; i <= 2.1; i += 0.1)
+			listOfSampleIntervals.add(String.format("%.2f", i).replace(",", "."));
 		for (int i = 0; i < 100; i++)
 			listOfClassNumbers.add(i);
 		listOfResolutions.add(new Resolutions(608.0, 608.0, null));
