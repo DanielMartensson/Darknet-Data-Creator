@@ -162,7 +162,7 @@ public class TrainingThread extends Thread {
 
 	public void setComponents(MainController mainController) {
 		selectedWeightFile = mainController.getSelectedWeightFile();
-		selectedDataFile = mainController.getSelectedWeightFile();
+		selectedDataFile = mainController.getSelectedDataFile();
 		selectedDarknetFile = mainController.getSelectedDarknetFile();
 		selectedConfigFile = mainController.getSelectedConfigFile();
 		selectWeightFileButton = mainController.getSelectWeightFileButton();
