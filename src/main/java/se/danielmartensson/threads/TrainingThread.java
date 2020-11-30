@@ -141,7 +141,13 @@ public class TrainingThread extends Thread {
 	}
 
 	private void writeToTerminal(String newLine) {
-		String currentText = terminalTextArea.getText();
+		// It can happen that we get a error when we try to get the text from the text area box
+		String currentText = "";
+		try {
+			currentText = terminalTextArea.getText();
+		}catch(Exception e) {
+			currentText = "";
+		}
 		String[] currentLines = currentText.split("\n");
 		if (currentLines.length > 200) {
 			// Remove the first line and add the last line
@@ -152,7 +158,7 @@ public class TrainingThread extends Thread {
 			newText = currentText + "\n" + newLine; // Just add
 		}
 		Platform.runLater(() -> terminalTextArea.setText(newText));
-
+		
 	}
 
 	private void clearTerminal() {
