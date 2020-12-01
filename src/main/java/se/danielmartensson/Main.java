@@ -52,7 +52,6 @@ public class Main extends Application {
 			RUNTHREAD.set(false);
 		});
 		stage.setTitle("Darknet Data Creator");
-		stage.setResizable(false);
 		stage.show();
 	}
 
