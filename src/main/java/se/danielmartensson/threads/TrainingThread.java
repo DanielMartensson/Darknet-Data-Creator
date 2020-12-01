@@ -151,6 +151,7 @@ public class TrainingThread extends Thread {
 		String[] currentLines = currentText.split("\n");
 		if (currentLines.length > 200) {
 			// Remove the first line and add the last line
+			newText = "";
 			for (int i = 1; i < currentLines.length; i++)
 				newText += currentLines[i] + "\n";
 			newText += newLine;
