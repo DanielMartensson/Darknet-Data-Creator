@@ -188,7 +188,7 @@ public class MainController {
 
 	@FXML
 	void selectWeightFileButtonPressed(ActionEvent event) {
-		selectedWeightFile = fileHandeling.selectFile(selectWeightFileLabel, "Weight file", new String[] { "*.weights" });
+		selectedWeightFile = fileHandeling.selectFile(selectWeightFileLabel, "Weight file", new String[] { "*", "*.weights" });
 	}
 
 	@FXML
