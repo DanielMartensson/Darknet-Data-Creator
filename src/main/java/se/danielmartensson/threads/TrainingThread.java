@@ -160,7 +160,7 @@ public class TrainingThread extends Thread {
 		Platform.runLater(() -> {
 			terminalTextArea.setText(newText);
 			terminalTextArea.positionCaret(newText.length()); // Scroll to the bottom every time we update the text area box
-			});
+		});
 		
 	}
 
