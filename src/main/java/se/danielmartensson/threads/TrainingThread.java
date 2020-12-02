@@ -74,13 +74,13 @@ public class TrainingThread extends Thread {
 		processBuilder.directory(new File(darknetFolderPath));
 		if (FileHandeling.operativeSystem.equals("Windows")) {
 			if (meanAveragePrecisionsCheckBox.isSelected()) {
-				processBuilder.command(darknetFileName, "detector", "train", dataFolderName + "\\" + dataFileName, configFolderName + "\\" + configFileName, weightFolderName + "\\" + weightFileName, "-dont_show", "-mep");
+				processBuilder.command(darknetFileName, "detector", "train", dataFolderName + "\\" + dataFileName, configFolderName + "\\" + configFileName, weightFolderName + "\\" + weightFileName, "-dont_show", "-map");
 			} else {
 				processBuilder.command(darknetFileName, "detector", "train", dataFolderName + "\\" + dataFileName, configFolderName + "\\" + configFileName, weightFolderName + "\\" + weightFileName, "-dont_show");
 			}
 		} else {
 			if (meanAveragePrecisionsCheckBox.isSelected()) {
-				processBuilder.command("./" + darknetFileName, "detector", "train", dataFolderName + "/" + dataFileName, configFolderName + "/" + configFileName, weightFolderName + "/" + weightFileName, "-dont_show", "-mep");
+				processBuilder.command("./" + darknetFileName, "detector", "train", dataFolderName + "/" + dataFileName, configFolderName + "/" + configFileName, weightFolderName + "/" + weightFileName, "-dont_show", "-mp");
 			} else {
 				processBuilder.command("./" + darknetFileName, "detector", "train", dataFolderName + "/" + dataFileName, configFolderName + "/" + configFileName, weightFolderName + "/" + weightFileName, "-dont_show");
 			}
