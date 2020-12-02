@@ -266,7 +266,7 @@ public class MainController {
 		// Select the first one
 		sampleIntervallDropdownButton.getSelectionModel().select(0);
 		pictureResolutionDropdownButton.getSelectionModel().select(0);
-		classNumberDropdownButton.getSelectionModel().select(0);
+		classNumberDropdownButton.getSelectionModel().selectLast();
 
 		// Listeners
 		usbCameraDropdownButton.setOnAction(e -> usbCameraDropdownButtonValueChanged(e));
