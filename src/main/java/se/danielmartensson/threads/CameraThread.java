@@ -31,6 +31,7 @@ public class CameraThread extends Thread {
 	private AtomicBoolean runRecording;
 	private boolean hasOpen = false;
 	private boolean boundedBoxIsApplied = false;
+	private double countTime = 0;
 
 	// From the GUI
 	private Webcam webcam;
@@ -75,16 +76,22 @@ public class CameraThread extends Thread {
 						File savedImage = saveImage(cut);
 						showSavedImage(savedImage);
 						if (runRecording.get() && boundedBoxIsApplied) {
-							disableTheseComponentsWhenStartRecording();
-							File[] classes = checkClassFolderAndClassPathsFileStatus();
-							copySavedImageToClassFolder(classes);
+							// This if statement only runs every time the period is fully counted. Makes smother snap
+							if(countTime >= Double.parseDouble(sampleTime)) {
+								disableTheseComponentsWhenStartRecording();
+								File[] classes = checkClassFolderAndClassPathsFileStatus();
+								copySavedImageToClassFolder(classes);
+								countTime = 0;
+							}else {
+								countTime += 0.1;
+							}
 						} else {
 							enableTheseComponentsWhenStopRecording();
 						}
 					}else {
 						closeCamera();
+						countTime = 0;
 					}
-	
 				});
 				threadSleep();
 			}
@@ -198,8 +205,7 @@ public class CameraThread extends Thread {
 
 	private void threadSleep() {
 		try {
-			long time = (long) (Double.parseDouble(sampleTime) * 1000.0);
-			Thread.sleep(time);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
