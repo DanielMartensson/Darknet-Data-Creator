@@ -7,9 +7,9 @@ do it for you.
 
 `Darknet Data Creator` can also train a model for you by specify where your `.cfg`, `.weights`, `.data` and `darknet` or `darknet.exe` files are.
 
-# Data set
+# Dataset
 
-I have collected my own data set where i record a lots of things by using this software. All images are `416x416` with sample time `2 seconds`.
+I have collected my own dataset where i record a lots of things by using this software. All images are `416x416` with sample time `2 seconds`.
 
 https://github.com/DanielMartensson/Pictures-Of-Things
 
