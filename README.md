@@ -47,10 +47,12 @@ Also the paths for every `.png` pictures are listed.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Darknet-Data-Creator/main/pictures/paths.png)
 
-# Test with two classes from dataset Pictures-Of-Things
+# Test with two classes from dataset Pictures-Of-Things with Yolov4 Tiny
 
 This is a simple quick test where I had 344 training pictures of `cup` and `box` and 87 for validation. Total 431 batches. 
 It was quite difficult to train for the `box` due to the high variation of these boxes, but the `cup` did a great job due to the similarities.
+
+It took me about 30 minutes to create two classes and create a model.
 
 ![a](https://raw.githubusercontent.com/DanielMartensson/Darknet-Data-Creator/main/pictures/cup.jpg)
 
