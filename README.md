@@ -7,6 +7,12 @@ do it for you.
 
 `Darknet Data Creator` can also train a model for you by specify where your `.cfg`, `.weights`, `.data` and `darknet` or `darknet.exe` files are.
 
+# Data set
+
+I have collected my own data set where i record a lots of things by using this software. All images are `416x416`.
+
+https://github.com/DanielMartensson/Pictures-Of-Things
+
 # How to use
 
 Begin first to install Maven. Or else, you cannot run this `program`.
