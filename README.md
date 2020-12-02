@@ -9,7 +9,7 @@ do it for you.
 
 # Data set
 
-I have collected my own data set where i record a lots of things by using this software. All images are `416x416`.
+I have collected my own data set where i record a lots of things by using this software. All images are `416x416` with sample time `2 seconds`.
 
 https://github.com/DanielMartensson/Pictures-Of-Things
 
